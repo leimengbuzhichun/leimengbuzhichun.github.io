@@ -58,22 +58,10 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: ��Spark�����������á�<br>date: 2022-05-18 20:41:03<br>tags:<br>1.��������<br>��1���鿴������<br>      cat &#x2F;etc&#x2F;hostname<br>  (2)  Hostӳ��<br>      cd &#x2F;etc<br>      cat hosts<br>  (3)�鿴����ǽ״̬<br>      systemctl status firewalld.service<br>��4����¼node1��node2��node3<br>      ssh node1<br>      ssh node2<br>      ssh node3<br>  (5)ͬ��ʱ��<br>      ntpdate ntp5.aliyun.com<br>2.jdk����<br> ��1�����뻷��������װĿ¼<br>      cd &#x2F;export<br> ��2���ϴ� jdk-8u241-linux-x64.tar.gz��&#x2F;export&#x2F;server&#x2F;Ŀ¼�� ����ѹ�ļ�tar -zxvf jdk-8u241-linux-x64.tar.gz<br> ��3�� ���û�������<br>        vim &#x2F;etc&#x2F;profile<br>    export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241<br>    expore PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin<br>    export CLASSPATH&#x3D;.:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar<br>  ��4�����¼��ر���<br>        source &#x2F;etc&#x2F;profile<br>  ��5���鿴 java �汾��<br>         java -version<br>  ��6���ַ���node2��node3<br>    scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node2:&#x2F;export&#x2F;server&#x2F;<br>    scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node3:&#x2F;export&#x2F;server&#x2F;<br>  ��7������������(node1��node2��node3��<br>     ln -s jdk1.8.0_24&#x2F; jdk<br>3.Hadoop����<br>   ��1����Hadoop-3.3.0�ϴ���&#x2F;export&#x2F;serverĿ¼�²���ѹԴ��������������<br>     tar -zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br>     rm -r hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br>     ln -s &#x2F;export&#x2F;server&#x2F;hadoop-3.3.0&#x2F; &#x2F;export&#x2F;server&#x2F;hadoopf<br>   ��2���޸������ļ�<br>      ����·�� export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop<br>    ��vim hadoop-env.sh<br>    ���ļ�ĩβ����<br>    export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241</p>
-<pre><code>export HDFS_NAMENODE_USER=root
-export HDFS_DATANODE_USER=root
-export HDFS_SECONDARYNAMENODE_USER=root
-export YARN_RESOURCEMANAGER_USER=root
-export YARN_NODEMANAGER_USER=root 
-
-�� vim core-site.xmlm
-</code></pre>
- <!-- ����Ĭ��ʹ�õ��ļ�ϵͳ Hadoop֧��file��HDFS��GFS��ali|Amazon�Ƶ��ļ�ϵͳ -->
-<pre><code>&lt;property&gt;
-    &lt;name&gt;fs.defaultFS&lt;/name&gt;
-    &lt;value&gt;hdfs://node1:8020&lt;/value&gt;
-&lt;/property&gt;
-
-&lt;!-- ����Hadoop���ر�������·�� --&gt;
+<p>title: ��Spark�����������á�<br>date: 2022-05-18 20:41:03<br>tags:<br>һ.��������<br>1.�鿴������<br> cat &#x2F;etc&#x2F;hostname<br>2.Hostӳ��<br> cd &#x2F;etc<br> cat hosts<br>3.�鿴����ǽ״̬<br> systemctl status firewalld.service<br>4.��¼node1��node2��node3<br> ssh node1<br> ssh node2<br> ssh node3<br>5.ͬ��ʱ��<br> ntpdate ntp5.aliyun.com<br>��.jdk����<br>1.���뻷��������װĿ¼<br> m dir -p &#x2F;export&#x2F;server<br>2.�ϴ� jdk-8u241-linux-x64.tar.gz��&#x2F;export&#x2F;server&#x2F;Ŀ¼�� ����ѹ�ļ�<br> tar -zxvf jdk-8u241-linux-x64.tar.gz<br>3.���û�������<br> vim &#x2F;etc&#x2F;profile</p>
+<p> export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241<br> expore PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin<br> export CLASSPATH&#x3D;.:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar<br>4.���¼��ر���<br> source &#x2F;etc&#x2F;profile<br>5.�鿴 java �汾��<br> java -version<br>6.node1�ڵ㽫Java�ַ���node2��node3<br> scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node2:&#x2F;export&#x2F;server&#x2F;<br> scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node3:&#x2F;export&#x2F;server&#x2F;<br>7.���� node2 �� node3 �� jdk �������������Ϸ� node2 �����÷���һ����<br>8.����������(node1��node2��node3��<br> ln -s jdk1.8.0_24&#x2F; jdk<br>9.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>��.Hadoop����<br>1.��Hadoop-3.3.0�ϴ���&#x2F;export&#x2F;serverĿ¼�²���ѹԴ��������������<br> tar -zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br> ln -s &#x2F;export&#x2F;server&#x2F;hadoop-3.3.0&#x2F; &#x2F;export&#x2F;server&#x2F;hadoopf<br>2.�޸������ļ�������·�� export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop��<br>��hadoop-env.sh<br> #���ļ�ĩβ����<br> export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241</p>
+<p> export HDFS_NAMENODE_USER&#x3D;root<br> export HDFS_DATANODE_USER&#x3D;root<br> export HDFS_SECONDARYNAMENODE_USER&#x3D;root<br> export YARN_RESOURCEMANAGER_USER&#x3D;root<br> export YARN_NODEMANAGER_USER&#x3D;root<br> ��core-site.xmlm<br> <!-- ����Ĭ��ʹ�õ��ļ�ϵͳ Hadoop֧��file��HDFS��GFS��ali|Amazon�Ƶ��ļ�ϵͳ --><br>    <property><br>        <name>fs.defaultFS</name><br>        <value>hdfs:&#x2F;&#x2F;node1:8020</value><br>    </property></p>
+<pre><code>&lt;!-- ����Hadoop���ر�������·�� --&gt;
 &lt;property&gt;
     &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
     &lt;value&gt;/export/data/hadoop-3.3.0&lt;/value&gt;
@@ -101,16 +89,8 @@ export YARN_NODEMANAGER_USER=root
     &lt;name&gt;fs.trash.interval&lt;/name&gt;
     &lt;value&gt;1440&lt;/value&gt;
 &lt;/property&gt;
-
-��vim hdfs-site.xml
 </code></pre>
- <!-- ����SNN�������л���λ����Ϣ -->
-<pre><code>&lt;property&gt;
-    &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
-    &lt;value&gt;node2:9868&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<p>   �� vim mapred-site.xml</p>
+<p>��hdfs-site.xml<br> <!-- ����SNN�������л���λ����Ϣ --><br>    <property><br>        <name>dfs.namenode.secondary.http-address</name><br>        <value>node2:9868</value><br>    </property><br>��mapred-site.xml</p>
 <!-- ����MR����Ĭ������ģʽ�� yarn��Ⱥģʽ local����ģʽ -->
 <pre><code>&lt;property&gt;
   &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
@@ -144,7 +124,7 @@ export YARN_NODEMANAGER_USER=root
   &lt;value&gt;HADOOP_MAPRED_HOME=$&#123;HADOOP_HOME&#125;&lt;/value&gt;
 &lt;/property&gt;
 </code></pre>
-<p>  �� vim yarn-site.xml</p>
+<p> ��yarn-site.xml</p>
 <!-- ����YARN��Ⱥ����ɫ���л���λ�� -->
 <pre><code>&lt;property&gt;
     &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
@@ -186,20 +166,21 @@ export YARN_NODEMANAGER_USER=root
   &lt;value&gt;604800&lt;/value&gt;
 &lt;/property&gt;
 </code></pre>
-<p>   ��vim workers<br> node1.itcast.cn<br> node2.itcast.cn<br> node3.itcast.cn</p>
-<p>   ��3���ַ�ͬ��hadoop��װ��<br>  cd &#x2F;export&#x2F;server</p>
-<p>  scp -r hadoop-3.3.0 root@node2:$PWD<br>  scp -r hadoop-3.3.0 root@node3:$PWD</p>
-<p>   ��4����hadoop���ӵ�����������3̨������<br>  vim &#x2F;etc&#x2F;profile<br>  export HADOOP_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;hadoop-3.3.0<br>  export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin:$HADOOP_HOME&#x2F;sbin</p>
-<p>  source &#x2F;etc&#x2F;profile<br>   ��5��Hadoop��Ⱥ����<br>   ���״�����Ӧ����ʽ��namenode<br>      hdfs namenode -format<br>   ��ʹ�ýű�һ��������jps�鿴����<br>     start-dfs.sh<br>     jps<br>   �۲鿴hdfs��yarn��Ⱥ��web UIҳ��<br>   HDFS��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:9870/">http://node1:9870/</a><br>   YARN��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:8088/">http://node1:8088/</a><br>4.zookeeper����<br>   ��1����node1�����ϣ���ѹzookeeper��ѹ������&#x2F;export&#x2F;server·����ȥ��Ȼ��׼�����н�ѹ<br>  cd &#x2F;export&#x2F;server<br>  tar -zxvf zookeeper-3.4.6.tar.gz<br>   ��2������������<br>  ln -s zookeeper-3.4.6&#x2F; zookeeper<br>   ��3���޸������ļ�<br>  ����&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F;Ŀ¼�¸���zoo_sample.cfg�ļ�Ϊzoo.cfg��cp zoo_sample.cfg zoo.cfg<br>  ����&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;·���´���һ��zkdatas�ļ��У�mkdir -p &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;<br>  ��vim zoo.cfg<br>#The number of milliseconds of each tick<br>tickTime&#x3D; 2000</p>
-<h1 id="The-number-of-ticks-that-the-initial"><a href="#The-number-of-ticks-that-the-initial" class="headerlink" title="The number of ticks that the initial"></a>The number of ticks that the initial</h1><h1 id="synchronization-phase-can-take"><a href="#synchronization-phase-can-take" class="headerlink" title="synchronization phase can take"></a>synchronization phase can take</h1><p>tickTime&#x3D;10</p>
-<h1 id="The-number-of-ticks-that-can-pass-between"><a href="#The-number-of-ticks-that-can-pass-between" class="headerlink" title="The number of ticks that can pass between"></a>The number of ticks that can pass between</h1><h1 id="sending-a-request-and-getting-an-acknowledgement"><a href="#sending-a-request-and-getting-an-acknowledgement" class="headerlink" title="sending a request and getting an acknowledgement"></a>sending a request and getting an acknowledgement</h1><p>syncLimit&#x3D;5</p>
-<h1 id="the-directory-where-the-snapshot-is-stored"><a href="#the-directory-where-the-snapshot-is-stored" class="headerlink" title="the directory where the snapshot is stored."></a>the directory where the snapshot is stored.</h1><h1 id="do-not-use-x2F-tmp-for-storage-x2F-tmp-here-is-just"><a href="#do-not-use-x2F-tmp-for-storage-x2F-tmp-here-is-just" class="headerlink" title="do not use &#x2F;tmp for storage, &#x2F;tmp here is just"></a>do not use &#x2F;tmp for storage, &#x2F;tmp here is just</h1><h1 id="example-sakes"><a href="#example-sakes" class="headerlink" title="example sakes."></a>example sakes.</h1><p>dataDir&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F; zkdatas</p>
-<p>#��Ⱥ�з�������ַ<br>server.1&#x3D;node1: 2888 :3888<br>server.2&#x3D;node2: 2888 : 3888<br>server.3&#x3D;node3: 2888 :3888<br>  ��4����node1��&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;Ŀ¼�´���һ��myid�ļ����ļ�����Ϊ1<br>echo 1 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>  ��5��ʹ��scp����zookeeper��װ����node2,node3��<br>cd &#x2F;export&#x2F;server&#x2F;<br>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node2:$PWD<br>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node3:$PWD<br>  ��6����node2��node3�Ͻ���������<br>ln -s zookeeper-3.4.6&#x2F; zookeeper<br>ln -s zookeeper-3.4.6&#x2F; zookeeper<br>  ��7���޸�node2��node3��myidֵΪ2��3<br>echo 2 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>echo 3 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>  ��8�����û������������¼���<br>#ZOOKEEPER HOME<br>export Z00KEEPER_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper<br>export PATH&#x3D;$PATH:$Z00KEEPER_ HOME&#x2F;bin<br>  ��9����̨��������zookeeper����<br>cd &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin<br>zkServer.sh start<br>  ��10����̨�����ֱ�鿴����״̬<br>zkServer.sh  status<br> ��11��jps�鿴��</p>
+<p>��workers<br> node1.itcast.cn<br> node2.itcast.cn<br> node3.itcast.cn<br>3.�ַ�ͬ��hadoop��װ��<br> cd &#x2F;export&#x2F;server</p>
+<p> scp -r hadoop-3.3.0 root@node2:$PWD<br> scp -r hadoop-3.3.0 root@node3:$PWD<br>4.��hadoop���ӵ�����������3̨������<br> vim &#x2F;etc&#x2F;profile</p>
+<p> export HADOOP_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;hadoop-3.3.0<br> export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin:$HADOOP_HOME&#x2F;sbin<br>5.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>6.Hadoop��Ⱥ����<br>���״�����Ӧ����ʽ��namenode<br> hdfs namenode -format<br>��ʹ�ýű�һ��������jps�鿴����<br> start-dfs.sh<br> start-yarn.sh<br> jps<br>�۲鿴hdfs��yarn��Ⱥ��web UIҳ��<br> HDFS��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:9870/">http://node1:9870/</a><br> YARN��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:8088/">http://node1:8088/</a><br>��.zookeeper����<br>1.������������IP��ӳ���ϵ���޸� &#x2F;etc&#x2F;hosts �ļ������� node1.root node2.root node3.root<br> vim &#x2F;etc&#x2F;hosts<br>2.��node1�����ϣ���ѹzookeeper��ѹ������&#x2F;export&#x2F;server·����ȥ��Ȼ��׼�����н�ѹ<br> cd &#x2F;export&#x2F;server<br> tar -zxvf zookeeper-3.4.6.tar.gz<br>3.����������<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br>4.���� &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F; �� zoo_sample.cfg �ļ�����Ϊ���ļ� zoo.cfg<br> cd &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F;<br> cp zoo_sample.cfg zoo.cfg<br>5.�� zoo.cfg ��������<br> #Zookeeper�����ݴ��Ŀ¼</p>
+<p> dataDir&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas</p>
+<h1 id="�������ٸ�����"><a href="#�������ٸ�����" class="headerlink" title="�������ٸ�����"></a>�������ٸ�����</h1><p> autopurge.snapRetainCount&#x3D;3</p>
+<h1 id="��־����Сʱ����һ��"><a href="#��־����Сʱ����һ��" class="headerlink" title="��־����Сʱ����һ��"></a>��־����Сʱ����һ��</h1><p> autopurge.purgeInterval&#x3D;1</p>
+<p> #��Ⱥ�з�������ַ<br> server.1&#x3D;node1: 2888 :3888<br> server.2&#x3D;node2: 2888 : 3888<br> server.3&#x3D;node3: 2888 :3888<br>6.��node1��&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;Ŀ¼�´���һ��myid�ļ����ļ�����Ϊ1<br> echo 1 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>7.ʹ��scp����zookeeper��װ����node2,node3��<br> cd &#x2F;export&#x2F;server&#x2F;<br> scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node2:$PWD<br> scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node3:$PWD<br>8.��node2��node3�Ͻ���������<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br>9.�޸�node2��node3��myidֵΪ2��3<br> echo 2 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br> echo 3 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>10.���û�������(��̨������Ҫ���ã�<br> vim &#x2F;etc&#x2F;profile</p>
+<h1 id="zookeeper-��������"><a href="#zookeeper-��������" class="headerlink" title="zookeeper ��������"></a>zookeeper ��������</h1><p> export ZOOKEEPER_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper<br> export PATH&#x3D;$PATH:$ZOOKEEPER_HOME&#x2F;bin<br>11.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>12.��̨��������zookeeper����<br>cd &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin<br>zkServer.sh start<br>12.��̨�����ֱ�鿴����״̬<br>zkServer.sh  status<br>13.jps�鿴��<br>14.�ű�һ������<br>vim zkServer.sh</p>
+<p>#!&#x2F;bin&#x2F;bash<br>if [ $# -eq 0 ] ;<br>then<br>    echo “please input param:start stop”<br>else<br>if [ $1 &#x3D; start  ] ;then	<br>    echo “${1}ing master”<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh start”<br>    for i in {1..2}<br>    do<br>        echo “${1}ping slave${i}”	<br>        ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh start”<br>    done<br>fi<br>if [ $1 &#x3D; stop ];then<br>    echo “${1}ping master “<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh stop”<br>    for i in {1..2}<br>    do<br>        echo “${1}ping slave${i}”	<br>        ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh stop”<br>    done<br>fi<br>if [ $1 &#x3D; status ];then<br>    echo “${1}ing master”<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh status”<br>    for i in {1..2}<br>    do<br>    echo “${1}ping slave${i}”<br>    ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh status”<br>    done<br>fi<br>fi</p>
+<h1 id="���l�����-x2F-bin-L¼��"><a href="#���l�����-x2F-bin-L¼��" class="headerlink" title="���ļ����� &#x2F;bin Ŀ¼��"></a>���ļ����� &#x2F;bin Ŀ¼��</h1><p>chmod +x zkServer-all.sh &amp;&amp; zkServer-all.sh</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3czrfgk0001jcv9d76z9k31" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3e7mjwq0000h0v94jvu67k4" data-title="" class="article-share-link">Share</a>
       
       
       
