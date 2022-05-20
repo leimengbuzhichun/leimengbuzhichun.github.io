@@ -151,7 +151,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">jps</span><br></pre></td></tr></table></figure>
 
 <p> 查看hdfs、yarn集群的web UI页面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> HDFS集群：http://node1:9870/</span><br><span class="line">![<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\1.png&quot;</span>](1.png)</span><br><span class="line"> YARN集群：http://node1:8088/</span><br><span class="line">![<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\2.png&quot;</span>](2.png)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> HDFS集群：http://node1:9870/</span><br><span class="line">![1.png](<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\1.png&quot;</span>)</span><br><span class="line"> YARN集群：http://node1:8088/</span><br><span class="line">![2.png](<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\2.png&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>四.zookeeper配置</p>
 <p> 配置主机名和IP的映射关系，修改 &#x2F;etc&#x2F;hosts 文件，添加 node1.root node2</p>
@@ -169,7 +169,7 @@
 <p> 给 zoo.cfg 添加内容</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Zookeeper的数据存放目录</span></span><br><span class="line"></span><br><span class="line">dataDir=/export/server/zookeeper/zkdatas</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保留多少个快照</span></span><br><span class="line">autopurge.snapRetainCount=3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志多少小时清理一次</span></span><br><span class="line">autopurge.purgeInterval=1</span><br><span class="line"></span><br><span class="line"><span class="comment">#集群中服务器地址</span></span><br><span class="line">server.1=node1: 2888 :3888 </span><br><span class="line">server.2=node2: 2888 :3888 </span><br><span class="line">server.3=node3: 2888 :3888</span><br></pre></td></tr></table></figure>
 
-<p>###在node1的&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;目录下创建一个myid文件，文件内容为1  </p>
+<p> 在node1的&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;目录下创建一个myid文件，文件内容为1  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
 
 <p> 使用scp拷贝zookeeper安装包到node2,node3上</p>
@@ -204,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3em22nk0000esv93886c2dc" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3emccc000004ov9e0vm7ruq" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
