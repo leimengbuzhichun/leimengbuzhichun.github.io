@@ -60,129 +60,144 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <hr>
-<p>title: ��Spark�����������á�<br>date: 2022-05-18 20:41:03<br>tags:<br>һ.��������<br>1.�鿴������<br> cat &#x2F;etc&#x2F;hostname<br>2.Hostӳ��<br> cd &#x2F;etc<br> cat hosts<br>3.�鿴����ǽ״̬<br> systemctl status firewalld.service<br>4.��¼node1��node2��node3<br> ssh node1<br> ssh node2<br> ssh node3<br>5.ͬ��ʱ��<br> ntpdate ntp5.aliyun.com<br>��.jdk����<br>1.���뻷��������װĿ¼<br> m dir -p &#x2F;export&#x2F;server<br>2.�ϴ� jdk-8u241-linux-x64.tar.gz��&#x2F;export&#x2F;server&#x2F;Ŀ¼�� ����ѹ�ļ�<br> tar -zxvf jdk-8u241-linux-x64.tar.gz<br>3.���û�������<br> vim &#x2F;etc&#x2F;profile</p>
-<p> export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241<br> expore PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin<br> export CLASSPATH&#x3D;.:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar<br>4.���¼��ر���<br> source &#x2F;etc&#x2F;profile<br>5.�鿴 java �汾��<br> java -version<br>6.node1�ڵ㽫Java�ַ���node2��node3<br> scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node2:&#x2F;export&#x2F;server&#x2F;<br> scp -r &#x2F;export&#x2F;server&#x2F;jdk1.8.0_241&#x2F; root@node3:&#x2F;export&#x2F;server&#x2F;<br>7.���� node2 �� node3 �� jdk �������������Ϸ� node2 �����÷���һ����<br>8.����������(node1��node2��node3��<br> ln -s jdk1.8.0_24&#x2F; jdk<br>9.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>��.Hadoop����<br>1.��Hadoop-3.3.0�ϴ���&#x2F;export&#x2F;serverĿ¼�²���ѹԴ��������������<br> tar -zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz<br> ln -s &#x2F;export&#x2F;server&#x2F;hadoop-3.3.0&#x2F; &#x2F;export&#x2F;server&#x2F;hadoopf<br>2.�޸������ļ�������·�� export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop��<br>��hadoop-env.sh<br> #���ļ�ĩβ����<br> export JAVA_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;jdk1.8.0_241</p>
-<p> export HDFS_NAMENODE_USER&#x3D;root<br> export HDFS_DATANODE_USER&#x3D;root<br> export HDFS_SECONDARYNAMENODE_USER&#x3D;root<br> export YARN_RESOURCEMANAGER_USER&#x3D;root<br> export YARN_NODEMANAGER_USER&#x3D;root<br> ��core-site.xmlm<br> <!-- ����Ĭ��ʹ�õ��ļ�ϵͳ Hadoop֧��file��HDFS��GFS��ali|Amazon�Ƶ��ļ�ϵͳ --><br>    <property><br>        <name>fs.defaultFS</name><br>        <value>hdfs:&#x2F;&#x2F;node1:8020</value><br>    </property></p>
-<pre><code>&lt;!-- ����Hadoop���ر�������·�� --&gt;
-&lt;property&gt;
-    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
-    &lt;value&gt;/export/data/hadoop-3.3.0&lt;/value&gt;
-&lt;/property&gt;
+<p>title: Spark������������<br>date: 2022-05-18 20:41:03<br>tags:<br>##һ.��������</p>
+<p>###�鿴������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/hostname</span><br></pre></td></tr></table></figure>
 
-&lt;!-- ����HDFS web UI�û����� --&gt;
-&lt;property&gt;
-    &lt;name&gt;hadoop.http.staticuser.user&lt;/name&gt;
-    &lt;value&gt;root&lt;/value&gt;
-&lt;/property&gt;
+<p>###Hostӳ��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc</span><br><span class="line"><span class="built_in">cat</span> hosts</span><br></pre></td></tr></table></figure>
 
-&lt;!-- ����hive �û��������� --&gt;
-&lt;property&gt;
-    &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;
-    &lt;value&gt;*&lt;/value&gt;
-&lt;/property&gt;
+<p>###�鿴����ǽ״̬</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure>
 
-&lt;property&gt;
-    &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;
-    &lt;value&gt;*&lt;/value&gt;
-&lt;/property&gt;
+<p>###��¼node1��node2��node3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node1</span><br><span class="line">ssh node2</span><br><span class="line">ssh node3</span><br></pre></td></tr></table></figure>
 
-&lt;!-- �ļ�ϵͳ����Ͱ����ʱ�� --&gt;
-&lt;property&gt;
-    &lt;name&gt;fs.trash.interval&lt;/name&gt;
-    &lt;value&gt;1440&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<p>��hdfs-site.xml<br> <!-- ����SNN�������л���λ����Ϣ --><br>    <property><br>        <name>dfs.namenode.secondary.http-address</name><br>        <value>node2:9868</value><br>    </property><br>��mapred-site.xml</p>
-<!-- ����MR����Ĭ������ģʽ�� yarn��Ⱥģʽ local����ģʽ -->
-<pre><code>&lt;property&gt;
-  &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-  &lt;value&gt;yarn&lt;/value&gt;
-&lt;/property&gt;
+<p>###ͬ��ʱ��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate ntp5.aliyun.com</span><br></pre></td></tr></table></figure>
 
-&lt;!-- MR������ʷ�����ַ --&gt;
-&lt;property&gt;
-  &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
-  &lt;value&gt;node1:10020&lt;/value&gt;
-&lt;/property&gt;
- 
-&lt;!-- MR������ʷ������web�˵�ַ --&gt;
-&lt;property&gt;
-  &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;
-  &lt;value&gt;node1:19888&lt;/value&gt;
-&lt;/property&gt;
+<p>##��.jdk����</p>
+<p>###���뻷��������װĿ¼</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m <span class="built_in">dir</span> -p /export/server</span><br></pre></td></tr></table></figure>
 
-&lt;property&gt;
-  &lt;name&gt;yarn.app.mapreduce.am.env&lt;/name&gt;
-  &lt;value&gt;HADOOP_MAPRED_HOME=$&#123;HADOOP_HOME&#125;&lt;/value&gt;
-&lt;/property&gt;
+<p>###�ϴ� jdk-8u241-linux-x64.tar.gz��&#x2F;export&#x2F;server&#x2F;Ŀ¼�� ����ѹ�ļ�</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf jdk-8u241-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
 
-&lt;property&gt;
-  &lt;name&gt;mapreduce.map.env&lt;/name&gt;
-  &lt;value&gt;HADOOP_MAPRED_HOME=$&#123;HADOOP_HOME&#125;&lt;/value&gt;
-&lt;/property&gt;
+<p>###���û�������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/export/server/jdk1.8.0_241</span><br><span class="line">expore PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</span><br></pre></td></tr></table></figure>
 
-&lt;property&gt;
-  &lt;name&gt;mapreduce.reduce.env&lt;/name&gt;
-  &lt;value&gt;HADOOP_MAPRED_HOME=$&#123;HADOOP_HOME&#125;&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<p> ��yarn-site.xml</p>
-<!-- ����YARN��Ⱥ����ɫ���л���λ�� -->
-<pre><code>&lt;property&gt;
-    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
-    &lt;value&gt;node1&lt;/value&gt;
-&lt;/property&gt;
+<p>###���¼��ر���</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
 
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-&lt;/property&gt;
+<p>###�鿴 java �汾�� </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
 
-&lt;!-- �Ƿ񽫶�����ʵʩ�����ڴ����� --&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;
-    &lt;value&gt;false&lt;/value&gt;
-&lt;/property&gt;
+<p>###node1�ڵ㽫Java�ַ���node2��node3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp -r /export/server/jdk1.8.0_241/ root@node2:/export/server/</span><br><span class="line">scp -r /export/server/jdk1.8.0_241/ root@node3:/export/server/</span><br></pre></td></tr></table></figure>
 
-&lt;!-- �Ƿ񽫶�����ʵʩ�����ڴ����ơ� --&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;
-    &lt;value&gt;false&lt;/value&gt;
-&lt;/property&gt;
+<p>###���� node2 �� node3 �� jdk �������������Ϸ� node2 �����÷���һ����</p>
+<p>###����������(node1��node2��node3��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s jdk1.8.0_24/ jdk</span><br></pre></td></tr></table></figure>
 
-&lt;!-- ������־�ۼ� --&gt;
-&lt;property&gt;
-  &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
-  &lt;value&gt;true&lt;/value&gt;
-&lt;/property&gt;
+<p>###���¼��ػ��������ļ�</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
 
-&lt;!-- ����yarn��ʷ��������ַ --&gt;
-&lt;property&gt;
-    &lt;name&gt;yarn.log.server.url&lt;/name&gt;
-    &lt;value&gt;http://node1:19888/jobhistory/logs&lt;/value&gt;
-&lt;/property&gt;
+<p>##��.Hadoop����  </p>
+<p>###��Hadoop-3.3.0�ϴ���&#x2F;export&#x2F;serverĿ¼�²���ѹԴ��������������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hadoop-3.3.0-Centos7-64-with-snappy.tar.gz</span><br><span class="line"><span class="built_in">ln</span> -s /export/server/hadoop-3.3.0/ /export/server/hadoopf </span><br></pre></td></tr></table></figure>
 
-&lt;!-- ��ʷ��־�����ʱ�� 7�� --&gt;
-&lt;property&gt;
-  &lt;name&gt;yarn.log-aggregation.retain-seconds&lt;/name&gt;
-  &lt;value&gt;604800&lt;/value&gt;
-&lt;/property&gt;
-</code></pre>
-<p>��workers<br> node1.itcast.cn<br> node2.itcast.cn<br> node3.itcast.cn<br>3.�ַ�ͬ��hadoop��װ��<br> cd &#x2F;export&#x2F;server</p>
-<p> scp -r hadoop-3.3.0 root@node2:$PWD<br> scp -r hadoop-3.3.0 root@node3:$PWD<br>4.��hadoop���ӵ�����������3̨������<br> vim &#x2F;etc&#x2F;profile</p>
-<p> export HADOOP_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;hadoop-3.3.0<br> export PATH&#x3D;$PATH:$HADOOP_HOME&#x2F;bin:$HADOOP_HOME&#x2F;sbin<br>5.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>6.Hadoop��Ⱥ����<br>���״�����Ӧ����ʽ��namenode<br> hdfs namenode -format<br>��ʹ�ýű�һ��������jps�鿴����<br> start-dfs.sh<br> start-yarn.sh<br> jps<br>�۲鿴hdfs��yarn��Ⱥ��web UIҳ��<br> HDFS��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:9870/">http://node1:9870/</a><br> YARN��Ⱥ��<a target="_blank" rel="noopener" href="http://node1:8088/">http://node1:8088/</a><br>��.zookeeper����<br>1.������������IP��ӳ���ϵ���޸� &#x2F;etc&#x2F;hosts �ļ������� node1.root node2.root node3.root<br> vim &#x2F;etc&#x2F;hosts<br>2.��node1�����ϣ���ѹzookeeper��ѹ������&#x2F;export&#x2F;server·����ȥ��Ȼ��׼�����н�ѹ<br> cd &#x2F;export&#x2F;server<br> tar -zxvf zookeeper-3.4.6.tar.gz<br>3.����������<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br>4.���� &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F; �� zoo_sample.cfg �ļ�����Ϊ���ļ� zoo.cfg<br> cd &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F;<br> cp zoo_sample.cfg zoo.cfg<br>5.�� zoo.cfg ��������<br> #Zookeeper�����ݴ��Ŀ¼</p>
-<p> dataDir&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas</p>
-<h1 id="�������ٸ�����"><a href="#�������ٸ�����" class="headerlink" title="�������ٸ�����"></a>�������ٸ�����</h1><p> autopurge.snapRetainCount&#x3D;3</p>
-<h1 id="��־����Сʱ����һ��"><a href="#��־����Сʱ����һ��" class="headerlink" title="��־����Сʱ����һ��"></a>��־����Сʱ����һ��</h1><p> autopurge.purgeInterval&#x3D;1</p>
-<p> #��Ⱥ�з�������ַ<br> server.1&#x3D;node1: 2888 :3888<br> server.2&#x3D;node2: 2888 : 3888<br> server.3&#x3D;node3: 2888 :3888<br>6.��node1��&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;Ŀ¼�´���һ��myid�ļ����ļ�����Ϊ1<br> echo 1 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>7.ʹ��scp����zookeeper��װ����node2,node3��<br> cd &#x2F;export&#x2F;server&#x2F;<br> scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node2:$PWD<br> scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.4.6&#x2F; node3:$PWD<br>8.��node2��node3�Ͻ���������<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br> ln -s zookeeper-3.4.6&#x2F; zookeeper<br>9.�޸�node2��node3��myidֵΪ2��3<br> echo 2 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br> echo 3 &gt; &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid<br>10.���û�������(��̨������Ҫ���ã�<br> vim &#x2F;etc&#x2F;profile</p>
-<h1 id="zookeeper-��������"><a href="#zookeeper-��������" class="headerlink" title="zookeeper ��������"></a>zookeeper ��������</h1><p> export ZOOKEEPER_HOME&#x3D;&#x2F;export&#x2F;server&#x2F;zookeeper<br> export PATH&#x3D;$PATH:$ZOOKEEPER_HOME&#x2F;bin<br>11.���¼��ػ��������ļ�<br> source &#x2F;etc&#x2F;profile<br>12.��̨��������zookeeper����<br>cd &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin<br>zkServer.sh start<br>12.��̨�����ֱ�鿴����״̬<br>zkServer.sh  status<br>13.jps�鿴��<br>14.�ű�һ������<br>vim zkServer.sh</p>
-<p>#!&#x2F;bin&#x2F;bash<br>if [ $# -eq 0 ] ;<br>then<br>    echo “please input param:start stop”<br>else<br>if [ $1 &#x3D; start  ] ;then	<br>    echo “${1}ing master”<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh start”<br>    for i in {1..2}<br>    do<br>        echo “${1}ping slave${i}”	<br>        ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh start”<br>    done<br>fi<br>if [ $1 &#x3D; stop ];then<br>    echo “${1}ping master “<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh stop”<br>    for i in {1..2}<br>    do<br>        echo “${1}ping slave${i}”	<br>        ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh stop”<br>    done<br>fi<br>if [ $1 &#x3D; status ];then<br>    echo “${1}ing master”<br>    ssh master “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh status”<br>    for i in {1..2}<br>    do<br>    echo “${1}ping slave${i}”<br>    ssh slave${i} “source &#x2F;etc&#x2F;profile;&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;zkServer.sh status”<br>    done<br>fi<br>fi</p>
-<h1 id="���l�����-x2F-bin-L¼��"><a href="#���l�����-x2F-bin-L¼��" class="headerlink" title="���ļ����� &#x2F;bin Ŀ¼��"></a>���ļ����� &#x2F;bin Ŀ¼��</h1><p>chmod +x zkServer-all.sh &amp;&amp; zkServer-all.sh</p>
+<p>###�޸������ļ�������·�� export&#x2F;server&#x2F;hadoop-3.3.0&#x2F;etc&#x2F;hadoop��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/hadoop-3.3.0/etc/hadoop</span><br></pre></td></tr></table></figure>
 
+<p>###hadoop-env.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#���ļ�ĩβ����</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/export/server/jdk1.8.0_241</span><br><span class="line">   </span><br><span class="line"><span class="built_in">export</span> HDFS_NAMENODE_USER=root</span><br><span class="line"><span class="built_in">export</span> HDFS_DATANODE_USER=root</span><br><span class="line"><span class="built_in">export</span> HDFS_SECONDARYNAMENODE_USER=root</span><br><span class="line"><span class="built_in">export</span> YARN_RESOURCEMANAGER_USER=root</span><br><span class="line"><span class="built_in">export</span> YARN_NODEMANAGER_USER=root </span><br></pre></td></tr></table></figure>
+
+<p> ###core-site.xmlm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- ����Ĭ��ʹ�õ��ļ�ϵͳ Hadoop֧��file��HDFS��GFS��ali|Amazon�Ƶ��ļ�ϵͳ --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;hdfs://node1:8020&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;!-- ����Hadoop���ر�������·�� --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;/export/data/hadoop-3.3.0&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;!-- ����HDFS web UI�û����� --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;hadoop.http.staticuser.user&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;!-- ����hive �û��������� --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;*&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   </span><br><span class="line">   &lt;!-- �ļ�ϵͳ����Ͱ����ʱ�� --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;fs.trash.interval&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;1440&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>###hdfs-site.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- ����SNN�������л���λ����Ϣ --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">       &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">       &lt;value&gt;node2:9868&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>###mapred-site.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- ����MR����Ĭ������ģʽ�� yarn��Ⱥģʽ <span class="built_in">local</span>����ģʽ --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- MR������ʷ�����ַ --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;node1:10020&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">     </span><br><span class="line">    &lt;!-- MR������ʷ������web�˵�ַ --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;node1:19888&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;yarn.app.mapreduce.am.env&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;HADOOP_MAPRED_HOME=<span class="variable">$&#123;HADOOP_HOME&#125;</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapreduce.map.env&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;HADOOP_MAPRED_HOME=<span class="variable">$&#123;HADOOP_HOME&#125;</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;mapreduce.reduce.env&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;HADOOP_MAPRED_HOME=<span class="variable">$&#123;HADOOP_HOME&#125;</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<p> ###yarn-site.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- ����YARN��Ⱥ����ɫ���л���λ�� --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">    	&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    	&lt;value&gt;node1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- �Ƿ񽫶�����ʵʩ�����ڴ����� --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- �Ƿ񽫶�����ʵʩ�����ڴ����ơ� --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- ������־�ۼ� --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;<span class="literal">true</span>&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- ����yarn��ʷ��������ַ --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.log.server.url&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;http://node1:19888/jobhistory/logs&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- ��ʷ��־�����ʱ�� 7�� --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">      &lt;name&gt;yarn.log-aggregation.retain-seconds&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;604800&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br></pre></td></tr></table></figure>
+
+<p>###workers</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node1.itcast.cn</span><br><span class="line">node2.itcast.cn</span><br><span class="line">node3.itcast.cn</span><br></pre></td></tr></table></figure>
+
+<p>###�ַ�ͬ��hadoop��װ��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server</span><br><span class="line"> </span><br><span class="line">scp -r hadoop-3.3.0 root@node2:<span class="variable">$PWD</span></span><br><span class="line">scp -r hadoop-3.3.0 root@node3:<span class="variable">$PWD</span></span><br></pre></td></tr></table></figure>
+
+<p>###��hadoop���ӵ�����������3̨������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"> </span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/export/server/hadoop-3.3.0</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$HADOOP_HOME</span>/sbin</span><br></pre></td></tr></table></figure>
+
+<p>###���¼��ػ��������ļ�</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>###Hadoop��Ⱥ����</p>
+<p>###�״�����Ӧ����ʽ��namenode</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+
+<p>###ʹ�ýű�һ��������jps�鿴����</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+<p>###�鿴hdfs��yarn��Ⱥ��web UIҳ��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HDFS��Ⱥ��http://node1:9870/</span><br><span class="line">YARN��Ⱥ��http://node1:8088/</span><br></pre></td></tr></table></figure>
+
+<p>##��.zookeeper����</p>
+<p>###������������IP��ӳ���ϵ���޸� &#x2F;etc&#x2F;hosts �ļ������� node1.root node2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root node3.root</span><br><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p>###��node1�����ϣ���ѹzookeeper��ѹ������&#x2F;export&#x2F;server·����ȥ��Ȼ��׼�����н�ѹ</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server</span><br><span class="line"> tar -zxvf zookeeper-3.4.6.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>###����������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s zookeeper-3.4.6/ zookeeper</span><br></pre></td></tr></table></figure>
+
+<p>###���� &#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;conf&#x2F; �� zoo_sample.cfg �ļ�����Ϊ���ļ� zoo.cfg</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/zookeeper/conf/ </span><br><span class="line"> <span class="built_in">cp</span> zoo_sample.cfg zoo.cfg</span><br></pre></td></tr></table></figure>
+
+<p>###�� zoo.cfg ��������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Zookeeper�����ݴ��Ŀ¼</span></span><br><span class="line"></span><br><span class="line">dataDir=/export/server/zookeeper/zkdatas</span><br><span class="line"></span><br><span class="line"><span class="comment"># �������ٸ�����</span></span><br><span class="line">autopurge.snapRetainCount=3</span><br><span class="line"></span><br><span class="line"><span class="comment"># ��־����Сʱ����һ��</span></span><br><span class="line">autopurge.purgeInterval=1</span><br><span class="line"></span><br><span class="line"><span class="comment">#��Ⱥ�з�������ַ</span></span><br><span class="line">server.1=node1: 2888 :3888 </span><br><span class="line">server.2=node2: 2888 :3888 </span><br><span class="line">server.3=node3: 2888 :3888</span><br></pre></td></tr></table></figure>
+
+<p>###��node1��&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;Ŀ¼�´���һ��myid�ļ����ļ�����Ϊ1  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
+
+<p>###ʹ��scp����zookeeper��װ����node2,node3��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/</span><br><span class="line">scp -r /export/server/zookeeper-3.4.6/ node2:<span class="variable">$PWD</span></span><br><span class="line">scp -r /export/server/zookeeper-3.4.6/ node3:<span class="variable">$PWD</span></span><br></pre></td></tr></table></figure>
+
+<p>###��node2��node3�Ͻ���������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s zookeeper-3.4.6/ zookeeper </span><br><span class="line"><span class="built_in">ln</span> -s zookeeper-3.4.6/ zookeeper </span><br></pre></td></tr></table></figure>
+
+<p>###�޸�node2��node3��myidֵΪ2��3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /export/server/zookeeper/zkdatas/myid</span><br><span class="line"><span class="built_in">echo</span> 3 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
+
+<p>###���û�������(��̨������Ҫ���ã�</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="comment"># zookeeper ��������</span></span><br><span class="line"><span class="built_in">export</span> ZOOKEEPER_HOME=/export/server/zookeeper</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ZOOKEEPER_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+
+<p>###���¼��ػ��������ļ�</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>###��̨��������zookeeper����</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/zookeeper/bin</span><br><span class="line">zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<p>###��̨�����ֱ�鿴����״̬</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zkServer.sh  status</span><br></pre></td></tr></table></figure>
+
+<p>###jps�鿴��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+
+<p>###�ű�һ������</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">vim zkServer.sh</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -eq 0 ] ;</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;please input param:start stop&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$1</span> = start  ] ;<span class="keyword">then</span>	</span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ing master&quot;</span></span><br><span class="line">	ssh master <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh start&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..2&#125;</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ping slave<span class="variable">$&#123;i&#125;</span>&quot;</span>	</span><br><span class="line">		ssh slave<span class="variable">$&#123;i&#125;</span> <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh start&quot;</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$1</span> = stop ];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ping master &quot;</span></span><br><span class="line">	ssh master <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh stop&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..2&#125;</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ping slave<span class="variable">$&#123;i&#125;</span>&quot;</span>	</span><br><span class="line">		ssh slave<span class="variable">$&#123;i&#125;</span> <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh stop&quot;</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$1</span> = status ];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ing master&quot;</span></span><br><span class="line">	ssh master <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh status&quot;</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..2&#125;</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;1&#125;</span>ping slave<span class="variable">$&#123;i&#125;</span>&quot;</span></span><br><span class="line">	ssh slave<span class="variable">$&#123;i&#125;</span> <span class="string">&quot;source /etc/profile;/export/server/zookeeper/bin/zkServer.sh status&quot;</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p>###���ļ����� &#x2F;bin Ŀ¼��</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x zkServer-all.sh &amp;&amp; zkServer-all.sh</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3e7mjwq0000h0v94jvu67k4" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3eisdny0000sov94dw651vf" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -233,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3e7mjx10001h0v9hf6hhtng" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3eisdod0001sov9fj63gz5i" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
