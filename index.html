@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>leichun</title>
+  <title>hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -21,7 +21,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">leichun</a>
+        <a href="/" id="logo">hexo</a>
       </h1>
       
     </div>
@@ -46,6 +46,105 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-My-New" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/21/My-New/" class="article-date">
+  <time class="dt-published" datetime="2022-05-21T05:44:36.000Z" itemprop="datePublished">2022-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/05/21/My-New/">Spark HA &amp; Yarn配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>一.Spark HA</p>
+<p>·启动zookeeper和hdfs</p>
+<p>·进入 &#x2F;export&#x2F;server&#x2F;spark&#x2F;conf 文件夹 修改 spark-env.sh 文件内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/spark/conf </span><br><span class="line"></span><br><span class="line">vim spark-env.sh</span><br><span class="line"></span><br><span class="line"><span class="comment">##指定spark老大Master的IP和提交任务的通信端口</span></span><br><span class="line"><span class="comment">#告知Spark的master运行在哪个机器上</span></span><br><span class="line"><span class="comment">#export SPARK_MASTER__HOST=node1</span></span><br><span class="line"><span class="comment">#告知sparkmnaster的通讯端口</span></span><br><span class="line"><span class="built_in">export</span> SPARK_MASTER_PORT=7077</span><br><span class="line"><span class="comment">#告知spark master的webui端 口</span></span><br><span class="line">SPARK_MASTER_WEBUI_PORT=8080</span><br><span class="line"></span><br><span class="line">SPARK_ DAEMON_ JAVA_ OPTS=<span class="string">&quot; -Dapark. deploy. recoveryMode= ZOOKEEPER -Dspark.deploy . zookeeper.</span></span><br><span class="line"><span class="string">url=node1:2181, node2:2181, node3:2181  -Dspark.deploy. zookeeper.dir-/spark-ha&quot;</span></span><br><span class="line"><span class="comment">#spark. deploy. recoveryMode 指定HA模式 基于Zookeeper实现</span></span><br><span class="line"><span class="comment">#指定Zookeeper的连接地址</span></span><br><span class="line"><span class="comment">#指定在Zookeeper中注册临时结点的路径</span></span><br></pre></td></tr></table></figure>
+
+
+<p>·使用scp分发spark-env.sh到node2,node3上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp spark-env.sh node2:/export/server/spark/conf/</span><br><span class="line"></span><br><span class="line">scp spark-env.sh node3:/export/server/spark/conf/</span><br></pre></td></tr></table></figure>
+<p>·更换zookeeper版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">将zookeepe新版本压缩包上传到/export/server/路径下，解压后删除压缩包</span><br><span class="line">在 /export/server 目录下创建软连接</span><br><span class="line">在<span class="built_in">cd</span> /export/server/apache-zookeeper-3.7.0-bin/conf/路径下进行文件配置</span><br><span class="line">将zoo_sample.cfg复制为zoo.cfg：<span class="built_in">cp</span> zoo_sample.cfg zoo.cfg</span><br><span class="line">在/export/server/zookeeper/路径下新建zkdatas文件夹：<span class="built_in">mkdir</span> -p /export/server/zookeeper/zkdatas/</span><br></pre></td></tr></table></figure>
+
+<p>·编辑zoo.cfg</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dataDir=/export/ server/ zookeeper / zkdatas</span><br><span class="line"></span><br><span class="line"><span class="comment">#集群中服务器地址</span></span><br><span class="line"></span><br><span class="line">server.1=node1:2888:3888 </span><br><span class="line">server.2=node2:2888:3888 </span><br><span class="line">server.3=node3:2888:3888</span><br></pre></td></tr></table></figure>
+
+<p>·添加node1的myid配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
+
+<p>·使用scp拷贝新版本zookeeper到node2,node3上<br>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.7.0&#x2F; node2:$PWD</p>
+<p>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.7.0&#x2F; node3:$PWD</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">·添加node2、node3的myid配置</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">echo 2 &gt; /export/server/zookeeper/zkdatas/myid   </span><br><span class="line"></span><br><span class="line">echo 3 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
+
+<p>·重新在&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;目录下编写脚本一键启动</p>
+<p>·在 master 上 启动一个master 和全部worke</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/spark/sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+
+<p>·访问 WebUI 界面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://node1:8081/</span><br><span class="line"></span><br><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
+
+<p>·启动node2上的master</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/spark/sbin/start-master.sh</span><br></pre></td></tr></table></figure>
+
+<p>·将node1上的master kill掉</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 端口号</span><br></pre></td></tr></table></figure>
+
+<p>·访问node2的spark web UI页面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
+
+<p>二.Spark(YARN)</p>
+<p>·在spark-env.sh中配置HADOOP_CONF_DIR和YARN_CONF_DIR（前面配置spark-Standlone 时已经配置过此项了</p>
+<p>·连接到YARN中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bin/pyspark --master yarn --deploy-mode client|cluster</span><br><span class="line"><span class="comment"># --deploy-mode 选项是指定部署模式, 默认是 客户端模式</span></span><br><span class="line"><span class="comment"># client就是客户端模式</span></span><br><span class="line"><span class="comment"># cluster就是集群模式</span></span><br><span class="line"><span class="comment"># --deploy-mode 仅可以用在YARN模式下</span></span><br><span class="line"></span><br><span class="line">bin/spark-shell --master yarn --deploy-mode client|cluster</span><br><span class="line"></span><br><span class="line">bin/spark-submit --master yarn --deploy-mode client|cluster /xxx/xxx/xxx.py 参数</span><br></pre></td></tr></table></figure>
+<p>·客户端工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">·bin/pyspark: pyspark解释器spark环境</span><br><span class="line">·bin/spark-shell: scala解释器spark环境</span><br><span class="line">·bin/spark-submit: 提交jar包或Python文件执行的工具</span><br><span class="line">·bin/spark-sql: sparksql客户端工具</span><br></pre></td></tr></table></figure>
+
+<p>·以spark-submit 为例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit --master spark://master:7077 xxx.py</span><br><span class="line"></span><br><span class="line">Usage: spark-submit [options] &lt;app jar | python file | R file&gt; [app arguments]</span><br><span class="line">Usage: spark-submit --<span class="built_in">kill</span> [submission ID] --master [spark://...]</span><br><span class="line">Usage: spark-submit --status [submission ID] --master [spark://...]</span><br><span class="line">Usage: spark-submit run-example [options] example-class [example args]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  --master MASTER_URL                      spark://host:port, mesos://host:port, yarn,</span><br><span class="line">                                                            k8s://https://host:port, or <span class="built_in">local</span> (Default: <span class="built_in">local</span>[*]).</span><br><span class="line">  --deploy-mode DEPLOY_MODE        部署模式 client 或者 cluster 默认是client</span><br><span class="line">  --class CLASS_NAME                         运行java或者scala class(<span class="keyword">for</span> Java / Scala apps).</span><br><span class="line">  --name NAME                                   程序的名字</span><br><span class="line">  --jars JARS                                         Comma-separated list of jars to include on the </span><br><span class="line">driver</span><br><span class="line">                                                            and executor classpaths.</span><br><span class="line">  --packages                                        Comma-separated list of maven coordinates of</span><br><span class="line"> jars to include</span><br><span class="line">                                                            on the driver and executor classpaths. Will </span><br><span class="line">search the <span class="built_in">local</span></span><br><span class="line">                                                            maven repo, <span class="keyword">then</span> maven central and any </span><br><span class="line">additional remote</span><br><span class="line">                                                            repositories given by --repositories. The format </span><br><span class="line"><span class="keyword">for</span> the</span><br><span class="line">                                                            coordinates should be </span><br><span class="line">groupId:artifactId:version.</span><br><span class="line">   --exclude-packages                         Comma-separated list of groupId:artifactId, to </span><br><span class="line">exclude <span class="keyword">while</span></span><br><span class="line">                                                            resolving the dependencies provided <span class="keyword">in</span> --</span><br><span class="line">packages to avoid</span><br><span class="line">                                                            dependency conflicts.</span><br><span class="line">  --repositories                                    Comma-separated list of additional remote </span><br><span class="line">repositories to</span><br><span class="line">                                                            search <span class="keyword">for</span> the maven coordinates given with --</span><br><span class="line">packages.</span><br><span class="line">  --py-files PY_FILES                            指定Python程序依赖的其它python文件</span><br><span class="line">  --files FILES                                       Comma-separated list of files to be placed <span class="keyword">in</span> </span><br><span class="line">the working</span><br><span class="line">                                                            directory of each executor. File paths of these </span><br><span class="line">files</span><br><span class="line">                                                            <span class="keyword">in</span> executors can be accessed via </span><br><span class="line">SparkFiles.get(fileName).</span><br><span class="line">  --archives ARCHIVES                        Comma-separated list of archives to be extracted </span><br><span class="line">into the</span><br><span class="line">                                                           working directory of each executor.</span><br><span class="line"></span><br><span class="line">  --conf, -c PROP=VALUE                   手动指定配置</span><br><span class="line">  --properties-file FILE                        Path to a file from <span class="built_in">which</span> to load extra </span><br><span class="line">properties. If not</span><br><span class="line">                                                           specified, this will look <span class="keyword">for</span> conf/spark-</span><br><span class="line">defaults.conf.</span><br><span class="line"></span><br><span class="line">  --driver-memory MEM                     Driver的可用内存(Default: 1024M).</span><br><span class="line">  --driver-java-options                       Driver的一些Java选项</span><br><span class="line">  --driver-library-path                        Extra library path entries to pass to the </span><br><span class="line">driver.</span><br><span class="line">  --driver-class-path                          Extra class path entries to pass to the driver. </span><br><span class="line">Note that</span><br><span class="line">                                                           jars added with --jars are automatically</span><br><span class="line">included <span class="keyword">in</span> the</span><br><span class="line">                                                          classpath.</span><br><span class="line"></span><br><span class="line">  --executor-memory MEM                Executor的内存 (Default: 1G).</span><br><span class="line"></span><br><span class="line">  --proxy-user NAME                         User to impersonate when submitting the </span><br><span class="line">application.</span><br><span class="line">                                                          This argument does not work with --principal / -</span><br><span class="line">-keytab.</span><br><span class="line"></span><br><span class="line">  --<span class="built_in">help</span>, -h                                        显示帮助文件</span><br><span class="line">  --verbose, -v                                   Print additional debug output.</span><br><span class="line">  --version,                                        打印版本</span><br><span class="line"></span><br><span class="line"> Cluster deploy mode only(集群模式专属):</span><br><span class="line">  --driver-cores NUM                        Driver可用的的CPU核数(Default: 1).</span><br><span class="line"></span><br><span class="line"> Spark standalone or Mesos with cluster deploy mode only:</span><br><span class="line">  --supervise                                     如果给定, 可以尝试重启Driver</span><br><span class="line"></span><br><span class="line"> Spark standalone, Mesos or K8s with cluster deploy mode only:</span><br><span class="line">  --<span class="built_in">kill</span> SUBMISSION_ID                    指定程序ID <span class="built_in">kill</span></span><br><span class="line">  --status SUBMISSION_ID               指定程序ID 查看运行状态</span><br><span class="line"></span><br><span class="line"> Spark standalone, Mesos and Kubernetes only:</span><br><span class="line">  --total-executor-cores NUM         整个任务可以给Executor多少个CPU核心用</span><br><span class="line"></span><br><span class="line"> Spark standalone, YARN and Kubernetes only:</span><br><span class="line">  --executor-cores NUM                 单个Executor能使用多少CPU核心</span><br><span class="line"></span><br><span class="line"> Spark on YARN and Kubernetes only(YARN模式下):</span><br><span class="line">  --num-executors NUM                 Executor应该开启几个</span><br><span class="line">  --principal PRINCIPAL                  Principal to be used to login to KDC.</span><br><span class="line">  --keytab KEYTAB                          The full path to the file that contains the </span><br><span class="line">keytab <span class="keyword">for</span> the</span><br><span class="line">                                                       principal specified above.</span><br><span class="line"></span><br><span class="line"> Spark on YARN only:</span><br><span class="line">  --queue QUEUE_NAME                指定运行的YARN队列(Default: <span class="string">&quot;default&quot;</span>).</span><br></pre></td></tr></table></figure>
+
+<p>·启动历史服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/hadoop-3.3.0/sbin</span><br><span class="line"></span><br><span class="line">./mr-jobhistory-daemon.sh start historyserver</span><br></pre></td></tr></table></figure>
+
+<p>·cilent模式测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> SPARK_ HOME=/export/server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/spark-submit --master yarn --dep 1oy-mode client  --</span><br><span class="line">driver-memory 512m --executor -memory 512m - -num-executors 1 --total- </span><br><span class="line">executor-cores 2 $(SPARK_ _HOME]/examples/src/main/python/pi.py 3</span><br></pre></td></tr></table></figure>
+
+<p>·cluster模式测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SPARK_ HOME=/export/ server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/ spark-submit --master yarn --deploy-mode clus ter --driver- </span><br><span class="line">memory 512m --executor-memory 512m -- num executors 1 --tota 1-executor-cores </span><br><span class="line">2 --conf <span class="string">&quot;spark . pyspark. driver . python=/ root/ anaconda3/bin/python3&quot;</span> --conf </span><br><span class="line"><span class="string">&quot;spark. pyspark. python=/ root/anaconda3/bin/python3&quot;</span></span><br><span class="line">$[SPARK_ _HOME]/examples/src/main/python/pi .py 3</span><br></pre></td></tr></table></figure>
+
+<p>·访问WebUI界面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:19888/</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3fjrlq00003tcv927kw6dzd" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-My-Post" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -181,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl3fg022k00012cv9bvmjdgu5" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl3fjrlpz0002tcv9c91rgty1" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
       
       
       
@@ -299,7 +398,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">jps</span><br></pre></td></tr></table></figure>
 
 <p> 查看hdfs、yarn集群的web UI页面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> HDFS集群：http://node1:9870/</span><br><span class="line">![](<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\1.png&quot;</span>)</span><br><span class="line"> YARN集群：http://node1:8088/</span><br><span class="line">![](<span class="string">&quot;C:\Users\30765\Pictures\Saved Pictures\2.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HDFS集群：http://node1:9870/</span><br><span class="line"></span><br><span class="line">YARN集群：http://node1:8088/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>四.zookeeper配置</p>
 <p>· 配置主机名和IP的映射关系，修改 &#x2F;etc&#x2F;hosts 文件，添加 node1.root node2</p>
@@ -352,7 +451,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3fg022g00002cv9c89qhhyn" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3fjrlpt0000tcv9azmid7fi" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
@@ -403,7 +502,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3fg022m00022cv9fm5f6gr2" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3fjrlpx0001tcv97y56gc5q" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -427,6 +526,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/05/21/My-New/">Spark HA &amp; Yarn配置</a>
+          </li>
         
           <li>
             <a href="/2022/05/20/My-Post/">Spark local&amp; stand-alone配置</a>
