@@ -84,9 +84,11 @@
 <p>·添加node1的myid配置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
 
-<p>·使用scp拷贝新版本zookeeper到node2,node3上<br>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.7.0&#x2F; node2:$PWD</p>
-<p>scp -r &#x2F;export&#x2F;server&#x2F;zookeeper-3.7.0&#x2F; node3:$PWD</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">·添加node2、node3的myid配置</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">echo 2 &gt; /export/server/zookeeper/zkdatas/myid   </span><br><span class="line"></span><br><span class="line">echo 3 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
+<p>·使用scp拷贝新版本zookeeper到node2,node3上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /export/server/zookeeper-3.7.0/ node2:<span class="variable">$PWD</span></span><br><span class="line"></span><br><span class="line">scp -r /export/server/zookeeper-3.7.0/ node3:<span class="variable">$PWD</span></span><br></pre></td></tr></table></figure>
+
+<p>·添加node2、node3的myid配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /export/server/zookeeper/zkdatas/myid   </span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 3 &gt; /export/server/zookeeper/zkdatas/myid</span><br></pre></td></tr></table></figure>
 
 <p>·重新在&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;bin&#x2F;目录下编写脚本一键启动</p>
 <p>·在 master 上 启动一个master 和全部worke</p>
@@ -105,7 +107,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
 
 <p>二.Spark(YARN)</p>
-<p>·在spark-env.sh中配置HADOOP_CONF_DIR和YARN_CONF_DIR（前面配置spark-Standlone 时已经配置过此项了</p>
+<p>·在spark-env.sh中配置HADOOP_CONF_DIR和YARN_CONF_DIR（前面配置spark-Standlone 时已经配置过此项了)</p>
 <p>·连接到YARN中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bin/pyspark --master yarn --deploy-mode client|cluster</span><br><span class="line"><span class="comment"># --deploy-mode 选项是指定部署模式, 默认是 客户端模式</span></span><br><span class="line"><span class="comment"># client就是客户端模式</span></span><br><span class="line"><span class="comment"># cluster就是集群模式</span></span><br><span class="line"><span class="comment"># --deploy-mode 仅可以用在YARN模式下</span></span><br><span class="line"></span><br><span class="line">bin/spark-shell --master yarn --deploy-mode client|cluster</span><br><span class="line"></span><br><span class="line">bin/spark-submit --master yarn --deploy-mode client|cluster /xxx/xxx/xxx.py 参数</span><br></pre></td></tr></table></figure>
 <p>·客户端工具</p>
@@ -118,10 +120,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/hadoop-3.3.0/sbin</span><br><span class="line"></span><br><span class="line">./mr-jobhistory-daemon.sh start historyserver</span><br></pre></td></tr></table></figure>
 
 <p>·cilent模式测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> SPARK_ HOME=/export/server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/spark-submit --master yarn --dep 1oy-mode client  --</span><br><span class="line">driver-memory 512m --executor -memory 512m - -num-executors 1 --total- </span><br><span class="line">executor-cores 2 $(SPARK_ _HOME]/examples/src/main/python/pi.py 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> SPARK_ HOME=/export/server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/spark-submit --master yarn --dep 1oy-mode client  --driver-memory 512m --executor -memory 512m - -num-executors 1 --total- executor-cores 2 $(SPARK_ _HOME]/examples/src/main/python/pi.py 3</span><br></pre></td></tr></table></figure>
 
 <p>·cluster模式测试</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SPARK_ HOME=/export/ server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/ spark-submit --master yarn --deploy-mode clus ter --driver- </span><br><span class="line">memory 512m --executor-memory 512m -- num executors 1 --tota 1-executor-cores </span><br><span class="line">2 --conf <span class="string">&quot;spark . pyspark. driver . python=/ root/ anaconda3/bin/python3&quot;</span> --conf </span><br><span class="line"><span class="string">&quot;spark. pyspark. python=/ root/anaconda3/bin/python3&quot;</span></span><br><span class="line">$[SPARK_ _HOME]/examples/src/main/python/pi .py 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SPARK_ HOME=/export/ server/ spark</span><br><span class="line"></span><br><span class="line">$[SPARK_ HOME]/bin/ spark-submit --master yarn --deploy-mode clus ter --driver- memory 512m --executor-memory 512m -- num executors 1 --tota 1-executor-cores 2 --conf <span class="string">&quot;spark . pyspark. driver . python=/ root/ anaconda3/bin/python3&quot;</span> --conf <span class="string">&quot;spark. pyspark. python=/ root/anaconda3/bin/python3&quot;</span></span><br><span class="line">$[SPARK_ _HOME]/examples/src/main/python/pi .py 3</span><br></pre></td></tr></table></figure>
 
 <p>·访问WebUI界面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:19888/</span><br></pre></td></tr></table></figure>
@@ -132,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3fjrlq00003tcv927kw6dzd" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3fkd0qt0002rsv9gsbi4h7b" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
       
       
       
