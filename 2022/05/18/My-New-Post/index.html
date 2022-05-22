@@ -151,11 +151,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">jps</span><br></pre></td></tr></table></figure>
 
 <p> 查看hdfs、yarn集群的web UI页面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> HDFS集群：http://node1:9870/</span><br><span class="line">![](C:\Users\30765\blog\<span class="built_in">source</span>\images\图片1.png)</span><br><span class="line"> YARN集群：http://node1:8088/</span><br><span class="line">1[](C:\Users\30765\blog\<span class="built_in">source</span>\images\图片2.png)</span><br></pre></td></tr></table></figure>
-
-<p>四.zookeeper配置</p>
-<p>· 配置主机名和IP的映射关系，修改 &#x2F;etc&#x2F;hosts 文件，添加 node1.root node2.root  node3.root</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line"></span><br><span class="line"><span class="comment">#结果显示</span></span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1              localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line">192.168.88.151  node1  node1.root</span><br><span class="line">192.168.88.152  node2  node2.root</span><br><span class="line">192.168.88.153  node3  node3.root</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDFS集群：http://node1:9870/</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\30765\blog\source\images\图片1.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">YARN集群：http://node1:8088/</span><br></pre></td></tr></table></figure>
+<p><img src="C:\Users\30765\blog\source\images\图片2.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">四.zookeeper配置</span><br><span class="line"></span><br><span class="line">· 配置主机名和IP的映射关系，修改 /etc/hosts 文件，添加 node1.root node2.root  node3.root</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">vim /etc/hosts</span><br><span class="line"></span><br><span class="line">#结果显示</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1              localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line">192.168.88.151  node1  node1.root</span><br><span class="line">192.168.88.152  node2  node2.root</span><br><span class="line">192.168.88.153  node3  node3.root</span><br></pre></td></tr></table></figure>
 
 <p> ·在node1主机上，解压zookeeper的压缩包到&#x2F;export&#x2F;server路径下去，然后准备进行解压</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server</span><br><span class="line"></span><br><span class="line">tar -zxvf zookeeper-3.4.6.tar.gz</span><br></pre></td></tr></table></figure>
@@ -204,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3h1il1f00008kv9e6wxcgte" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3h1n2dr0001rcv9bhxac8tz" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
