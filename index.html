@@ -97,8 +97,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/spark/sbin/start-all.sh</span><br></pre></td></tr></table></figure>
 
 <p>·访问 WebUI 界面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://node1:8081/</span><br><span class="line"></span><br><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:8081/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/%E5%9B%BE%E7%89%877.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/%E5%9B%BE%E7%89%878.png"></p>
 <p>·启动node2上的master</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/spark/sbin/start-master.sh</span><br></pre></td></tr></table></figure>
 
@@ -107,7 +109,7 @@
 
 <p>·访问node2的spark web UI页面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node2:8082/</span><br></pre></td></tr></table></figure>
-
+<p><img src="/../images/%E5%9B%BE%E7%89%879.png"></p>
 <p>二.Spark(YARN)</p>
 <p>·在spark-env.sh中配置HADOOP_CONF_DIR和YARN_CONF_DIR（前面配置spark-Standlone 时已经配置过此项了)</p>
 <p>·连接到YARN中</p>
@@ -129,14 +131,13 @@
 
 <p>·访问WebUI界面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:19888/</span><br></pre></td></tr></table></figure>
-
-
-
+<p><img src="/../images/%E5%9B%BE%E7%89%8710.png"></p>
+<p><img src="/../images/%E5%9B%BE%E7%89%8711.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3h1n2dn0000rcv9c89xgclp" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3h2o88300010kv9cvby94ne" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
       
       
       
@@ -207,7 +208,7 @@
 
 <p>·查看WebUI界面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">浏览器访问：</span><br><span class="line">http://node1:4040/</span><br></pre></td></tr></table></figure>
-
+<p><img src="/../images/%E5%9B%BE%E7%89%873.png"></p>
 <p>·退出</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
 
@@ -271,18 +272,17 @@
 <p>·启动spark的master和worker进程</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/start-all.sh</span><br></pre></td></tr></table></figure>
 
-<p>·查看spark web UI页面（8080）、历史服务器web UI页面（18080）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://node1:18080/</span><br><span class="line"></span><br><span class="line">http://node1:8080/</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<p>·查看spark web UI页面（8080）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:18080/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/%E5%9B%BE%E7%89%874.png"></p>
+<p>·查看历史服务器web UI页面（18080）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://node1:8080/</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/%E5%9B%BE%E7%89%875.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl3h1n2dt0002rcv99fy4315z" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl3h2o88400020kv95418bahp" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
       
       
       
@@ -401,9 +401,9 @@
 
 <p> 查看hdfs、yarn集群的web UI页面</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HDFS集群：http://node1:9870/</span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\30765\blog\source\images\图片1.png"></p>
+<p><img src="/../images/%E5%9B%BE%E7%89%871.png"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">YARN集群：http://node1:8088/</span><br></pre></td></tr></table></figure>
-<p><img src="C:\Users\30765\blog\source\images\图片2.png"></p>
+<p><img src="/../images/%E5%9B%BE%E7%89%872.png"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">四.zookeeper配置</span><br><span class="line"></span><br><span class="line">· 配置主机名和IP的映射关系，修改 /etc/hosts 文件，添加 node1.root node2.root  node3.root</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">vim /etc/hosts</span><br><span class="line"></span><br><span class="line">#结果显示</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1              localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line">192.168.88.151  node1  node1.root</span><br><span class="line">192.168.88.152  node2  node2.root</span><br><span class="line">192.168.88.153  node3  node3.root</span><br></pre></td></tr></table></figure>
 
 <p> ·在node1主机上，解压zookeeper的压缩包到&#x2F;export&#x2F;server路径下去，然后准备进行解压</p>
@@ -453,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3h1n2dr0001rcv9bhxac8tz" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3h2o87z00000kv9armqatnh" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
@@ -504,7 +504,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3h1n2du0003rcv98qbyfjkt" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3h2o88600030kv9gd3fh2e3" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
