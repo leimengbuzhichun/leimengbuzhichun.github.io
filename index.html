@@ -47,6 +47,73 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kafka-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/05/kafka-1/" class="article-date">
+  <time class="dt-published" datetime="2022-06-05T05:47:24.000Z" itemprop="datePublished">2022-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/05/kafka-1/">kafka 环境配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>·上传文件包到  &#x2F;export&#x2F;server&#x2F;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/</span><br></pre></td></tr></table></figure>
+
+<p>·解压文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf kafka_2.11-2.0.0.tgz</span><br></pre></td></tr></table></figure>
+
+<p>·创建软连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s kafak_2.11-2.0.0/ kafka</span><br></pre></td></tr></table></figure>
+
+<p>·进入 &#x2F;export&#x2F;server&#x2F;kafka&#x2F;confifig 修改 配置文件 server.properties</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/kafka/config</span><br><span class="line"></span><br><span class="line">vim server.properties</span><br></pre></td></tr></table></figure>
+
+<p>①21 行内容 broker.id&#x3D;0 为依次增长的:0、1、2、3、4,集群中唯一 id 从0开始，每台不能重复<br>(..&#x2F;images&#x2F;图片12.png)<br>②31 行内容 #listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;:9092 取消注释，改为listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;node1:9092<br>(..&#x2F;images&#x2F;图片13.png)<br>③59 行内容 log.dirs&#x3D;&#x2F;tmp&#x2F;kafka-logs 为默认日志文件存储的位置，改为log.dirs&#x3D;&#x2F;export&#x2F;server&#x2F;data&#x2F;kafka-logs<br>(..&#x2F;images&#x2F;图片14.png)<br>④63 行内容为 num.partitions&#x3D;1 是默认分区数<br>(..&#x2F;images&#x2F;图片15.png)<br>⑤76 行部分 (数据安全性（持久化之前先放到缓存上，从缓存刷到磁盘上interval.messages interval.ms )<br>(..&#x2F;images&#x2F;图片16.png)<br>⑥93 行部分（数据保留策略 168&#x2F;24&#x3D;7，1073741824&#x2F;1024&#x3D;1GB，300000ms &#x3D; 300s &#x3D; 5min超过了删掉<br>（最后修改时间还是创建时间–&gt;日志段中最晚的一条消息，维护这个最大的时间戳–&gt;用户无法干预）<br>(..&#x2F;images&#x2F;图片17.png)<br>⑦121 行内容 zookeeper.connect&#x3D;localhost:2181 修改为 zookeeper.connect&#x3D;node1:2181,node2:2181，node3:2181<br>(..&#x2F;images&#x2F;图片18.png)<br>⑧126 行内容 group.initial.rebalance.delay.ms&#x3D;0 修改为 group.initial.rebalance.delay.ms&#x3D;3000<br>(..&#x2F;images&#x2F;图片19.png)</p>
+<p>·将kafka分发给node2、node3</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/</span><br><span class="line"></span><br><span class="line">scp -r /export/server/kafka_2.11-2.0.0/ node2:<span class="variable">$PWD</span></span><br><span class="line"></span><br><span class="line">scp -r /export/server/kafka_2.11-2.0.0/ node3:<span class="variable">$PWD</span></span><br></pre></td></tr></table></figure>
+
+<p>·创建软件连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s .<span class="built_in">export</span>/server/kafka_2.11-2.0.0/ kafka</span><br></pre></td></tr></table></figure>
+
+<p>·配置 kafka 环境变量（注：可以一台一台配，也可以在 node1 完成后发给 node21 和node2）<br>(..&#x2F;images&#x2F;图片20.png)</p>
+<p>·重新加载环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souce /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>·修改node02和node03中的service.properties中的broker.id</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/kafka/config</span><br></pre></td></tr></table></figure>
+<p>①将文件 server.properties 的第 21 行的 broker.id&#x3D;0 修改为 broker.id&#x3D;1 同理 node2 同样操作<br>(..&#x2F;images&#x2F;图片21.png)<br>②将文件 server.properties 的第 31 行的 listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;node1:9092 修改为listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;node2:9092 同理node3 同样操作listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;node3:9092</p>
+<p> ·启停 kafka (注：kafka 启动需要在 zookeeper 启动的情况下才可)<br>(..&#x2F;images&#x2F;图片22.png)</p>
+<p>·定制脚本一键启动<br>(..&#x2F;images&#x2F;图片23.png)</p>
+<p>·放入 &#x2F;bin 路径下<br>(..&#x2F;images&#x2F;图片24.png)<br>(..&#x2F;images&#x2F;图片25.png)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/05/kafka-1/" data-id="cl40y4qxa0001v0v99fvx5hlu" data-title="kafka 环境配置" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-My-New" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/05/21/My-New/" class="article-date">
@@ -137,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl3iqqrwr0003jcv97g984fee" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl40y4qx40000v0v9afjwc8ci" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
       
       
       
@@ -282,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl3iqqrwn0001jcv94vlb11br" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl40y4qxf0004v0v9amc1419u" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
       
       
       
@@ -453,7 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl3iqqrwj0000jcv94nlx5twy" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl40y4qxe0003v0v94nkpax5z" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
@@ -504,7 +571,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl3iqqrwo0002jcv9houm614e" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl40y4qxd0002v0v99m5tan0s" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -528,6 +595,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/06/05/kafka-1/">kafka 环境配置</a>
+          </li>
         
           <li>
             <a href="/2022/05/21/My-New/">Spark HA &amp; Yarn配置</a>
@@ -557,7 +628,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li></ul>
     </div>
   </div>
 
