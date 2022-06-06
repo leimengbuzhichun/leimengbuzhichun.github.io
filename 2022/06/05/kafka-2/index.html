@@ -67,23 +67,23 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>·查看当前可用topic</p>
+        <p>1.查看当前可用topic</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/kafka/bin/</span><br><span class="line">kafka-topics.sh --list --zookeeper node1:2181 _consumer_offsets</span><br></pre></td></tr></table></figure>
 <p><img src="/../images/%E5%9B%BE%E7%89%8726.png"></p>
-<p>·创建topic，检查是否创建成功</p>
+<p>2.创建topic，检查是否创建成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --create --topic tpc_1 --partitions 2 --replication-factor 2 --zookeeper node1:2181</span><br></pre></td></tr></table></figure>
 <p><img src="/../images/%E5%9B%BE%E7%89%8727.png"></p>
-<p>·进入cd &#x2F;export&#x2F;data&#x2F;kafka-logs路径下查看分区的分布<br><img src="/../images/%E5%9B%BE%E7%89%8728.png"></p>
-<p>·删除topic</p>
+<p>3.进入cd &#x2F;export&#x2F;data&#x2F;kafka-logs路径下查看分区的分布<br><img src="/../images/%E5%9B%BE%E7%89%8728.png"></p>
+<p>4.删除topic</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh  --delete --topic tpc_1 --zookeeper node1:2181</span><br></pre></td></tr></table></figure>
 <p><img src="/../images/%E5%9B%BE%E7%89%8729.png"></p>
-<p>·查看topic、修改参数<br><img src="/../images/%E5%9B%BE%E7%89%8730.png"></p>
-<p>·生产者写入数据、消费者拉取数据<br><img src="/../images/%E5%9B%BE%E7%89%8731.png"></p>
+<p>5.查看topic、修改参数<br><img src="/../images/%E5%9B%BE%E7%89%8730.png"></p>
+<p>6.生产者写入数据、消费者拉取数据<br><img src="/../images/%E5%9B%BE%E7%89%8731.png"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/05/kafka-2/" data-id="cl42dcm0p0005bov98ptxdqre" data-title="Kafka命令行操作" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/06/05/kafka-2/" data-id="cl42jgc8m0006yov90gw46s50" data-title="Kafka命令行操作" class="article-share-link">Share</a>
       
       
       
