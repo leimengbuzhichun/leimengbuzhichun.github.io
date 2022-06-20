@@ -47,6 +47,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kafka-eagle" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/06/19/kafka-eagle/" class="article-date">
+  <time class="dt-published" datetime="2022-06-19T08:20:48.000Z" itemprop="datePublished">2022-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/06/19/kafka-eagle/">kafka-eagle配置文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p> 一、在官网下载安装包：<a target="_blank" rel="noopener" href="https://www.kafka-eagle.org/">https://www.kafka-eagle.org/</a></p>
+<p>二、上传压缩包</p>
+<p>三、解压压缩包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/</span><br><span class="line">tar -zxvf kafka-eagle-bin-2.1.0.tar.gz -C </span><br></pre></td></tr></table></figure>
+
+<p>四、建立软链接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /export/server/ kafka-eagle-bin-2.1.0 /export/server/kafka-eagle</span><br></pre></td></tr></table></figure>
+
+<p>五、在kafka-eagle目录下使用命令tar -zxvf efak-web-2.1.0-bin.tar.gz解压该文件包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/kafka-eagle/</span><br><span class="line">tar -zxvf efak-web-2.1.0-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>六、配置环境变量:JAVA_HOME 和 KE_HOME</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/java/jdk1.8</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> KE_HOME=/export/server/kafka-eagle</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$KE_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+
+<p>七、配置kafka-eagle</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server/kafka-eagle/conf </span><br><span class="line">vi system-config.properties</span><br></pre></td></tr></table></figure>
+
+<p>修改内容为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kafka.eagle.zk.cluster.alias=cluster1</span><br><span class="line">cluster1.zk.list=node1:2181,node2:2181,node3:2181</span><br><span class="line">cluster1.kafka.eagle.broker.size=3</span><br><span class="line">kafka.eagle.url=jdbc:sqlite:/export/data/db/ke.db</span><br></pre></td></tr></table></figure>
+
+<p>八、启动前需要手动创建&#x2F;export&#x2F;data&#x2F;db目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /export/data/db</span><br></pre></td></tr></table></figure>
+
+<p>九、启动eagle<br>（启动之前应先启动zookeeper和kafka）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/kafka-eagle/efak-web-2.1.0/bin/ke.sh start</span><br></pre></td></tr></table></figure>
+<p><img src="/../images/%E5%9B%BE%E7%89%8748.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/06/19/kafka-eagle/" data-id="cl4m9gufs00079sv94meodj36" data-title="kafka-eagle配置文件" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-kafka-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/06/05/kafka-3/" class="article-date">
@@ -102,7 +166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/05/kafka-3/" data-id="cl42jgc8m0005yov95b3n57ot" data-title="kafka API使用方法" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/06/05/kafka-3/" data-id="cl4m9gufr00059sv9g14efb9o" data-title="kafka API使用方法" class="article-share-link">Share</a>
       
       
       
@@ -152,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/05/kafka-2/" data-id="cl42jgc8m0006yov90gw46s50" data-title="Kafka命令行操作" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/06/05/kafka-2/" data-id="cl4m9gufs00069sv94ny55760" data-title="Kafka命令行操作" class="article-share-link">Share</a>
       
       
       
@@ -219,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/06/05/kafka-1/" data-id="cl42jgc8l0004yov94p7zcg46" data-title="kafka 环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/06/05/kafka-1/" data-id="cl4m9gufr00049sv9d5f2dt7f" data-title="kafka 环境配置" class="article-share-link">Share</a>
       
       
       
@@ -321,7 +385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl42jgc8i0001yov9aij3fruz" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/21/My-New/" data-id="cl4m9gufi00009sv9h35ecz87" data-title="Spark HA &amp; Yarn配置" class="article-share-link">Share</a>
       
       
       
@@ -466,7 +530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl42jgc8j0002yov97f1v4tcx" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/20/My-Post/" data-id="cl4m9gufq00039sv9111y7gta" data-title="Spark local&amp; stand-alone配置" class="article-share-link">Share</a>
       
       
       
@@ -637,7 +701,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl42jgc8d0000yov9aydkdjd0" data-title="Spark基础环境配置" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/18/My-New-Post/" data-id="cl4m9gufn00019sv90wde4im4" data-title="Spark基础环境配置" class="article-share-link">Share</a>
       
       
       
@@ -688,7 +752,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl42jgc8k0003yov9evof5sxy" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/15/hello-world/" data-id="cl4m9gufp00029sv9ar5kb5zu" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
@@ -714,6 +778,10 @@
       <ul>
         
           <li>
+            <a href="/2022/06/19/kafka-eagle/">kafka-eagle配置文件</a>
+          </li>
+        
+          <li>
             <a href="/2022/06/05/kafka-3/">kafka API使用方法</a>
           </li>
         
@@ -727,10 +795,6 @@
         
           <li>
             <a href="/2022/05/21/My-New/">Spark HA &amp; Yarn配置</a>
-          </li>
-        
-          <li>
-            <a href="/2022/05/20/My-Post/">Spark local&amp; stand-alone配置</a>
           </li>
         
       </ul>
